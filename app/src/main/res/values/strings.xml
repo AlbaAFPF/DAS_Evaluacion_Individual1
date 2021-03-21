@@ -4,7 +4,7 @@
     <!-- Escribimos todos los strings -->
 
     <!-- Pantalla "Registro" -->
-    <string name="textViewResgistroLogin">REGISTRO Y LOGIN</string>
+    <string name="textViewResgistroLogin">REGISTRO</string>
     <string name="textViewNombreUsu">Introduzca su nombre de usuario:</string>
     <string name="textViewContra1">Introduzca su contraseña:</string>
     <string name="textViewContra2">Repita la contraseña:</string>

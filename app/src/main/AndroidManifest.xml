@@ -16,7 +16,7 @@
             android:theme="@style/Registro">
 
             <intent-filter>
-                 Ponemos la pantalla de Login y Registro como la primera actividad que aparece
+
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,18 +25,12 @@
         </activity>
 
 
-
-        <!-- - Aquí arriba el tema principal -->
         <!-- - A cada actividad le asociamos su estilo personalizado -->
         <activity android:name=".Login"
             android:theme="@style/Login"/>
 
-
-
-
-
         <activity android:name=".NuevaTarea"
-            android:theme="@style/nuevaTarea"/>
+            android:theme="@style/NuevaTarea"/>
 
         <activity android:name=".Examenes"
             android:theme="@style/Examenes"/>

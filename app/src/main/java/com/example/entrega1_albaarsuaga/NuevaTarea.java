@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class NuevaTarea extends AppCompatActivity  {
 
@@ -33,6 +35,7 @@ public class NuevaTarea extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fijarIdioma();
         setContentView(R.layout.nueva_tarea);
 
         // Asignamos los id a las variables
@@ -106,12 +109,7 @@ public class NuevaTarea extends AppCompatActivity  {
             }
         });
 
-        // Configuración del canal para notidicaciones
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            elManager.createNotificationChannel(elCanal);
-        }
+
     }
 
     // Método para el botón de eliminación de tareas
@@ -178,6 +176,16 @@ public class NuevaTarea extends AppCompatActivity  {
                     }
                 });
         builder.show();
+    }
+
+    private void fijarIdioma() {
+        // Usamos Locale para forzar la localización desde dentro de la aplicación
+        Locale locale = new Locale(Param.locale);
+        Locale.setDefault(locale);
+        // Actualizamos la configuración de todos los recursos de la aplicación
+        Configuration configuracion = new Configuration();
+        configuracion.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(configuracion, getBaseContext().getResources().getDisplayMetrics());
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.entrega1_albaarsuaga;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Locale;
 
 public class Examenes extends AppCompatActivity {
 
@@ -33,6 +35,7 @@ public class Examenes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fijarIdioma();
         setContentView(R.layout.examenes);
 
         // Asignamos los id a las variables
@@ -159,5 +162,14 @@ public class Examenes extends AppCompatActivity {
         }
     }
 
+    private void fijarIdioma() {
+        // Usamos Locale para forzar la localización desde dentro de la aplicación
+        Locale locale = new Locale(Param.locale);
+        Locale.setDefault(locale);
+        // Actualizamos la configuración de todos los recursos de la aplicación
+        Configuration configuracion = new Configuration();
+        configuracion.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(configuracion, getBaseContext().getResources().getDisplayMetrics());
+    }
 
 }

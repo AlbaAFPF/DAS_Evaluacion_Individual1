@@ -1,9 +1,13 @@
 package com.example.entrega1_albaarsuaga;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +34,7 @@ public class Resgistro extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fijarIdioma();
         setContentView(R.layout.registro);
 
         // Asignamos los id a las variables
@@ -70,6 +75,13 @@ public class Resgistro extends AppCompatActivity {
 
                             // Notificamos al usuario que se ha registrado correctamente
 
+                            // Configuración del canal para notidicaciones
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
+                                NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                                elManager.createNotificationChannel(elCanal);
+                            }
+
                             // Crear el builder
                             NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(getApplicationContext(), "IdCanal");
                             elBuilder.setContentTitle("Registro completo.");
@@ -88,7 +100,6 @@ public class Resgistro extends AppCompatActivity {
                             // Informamos al usuario de que el nombre que ha introducido ya pertecene a la BD
                             Toast.makeText(Resgistro.this, "Este nombre de usuario ya está registrado.", Toast.LENGTH_LONG).show();
                         }
-
                     }else{
                         // Informamos al usuario de que las contraseñas introducidas no son las mismas
                         Toast.makeText(Resgistro.this, "Las contraseñas no coinciden.", Toast.LENGTH_LONG).show();
@@ -118,6 +129,8 @@ public class Resgistro extends AppCompatActivity {
         });
     }
 
+
+
     // Método para el cambio de idioma
     private void alertCambiarIdioma() {
         // Array con los idiomas disponibles.
@@ -130,10 +143,12 @@ public class Resgistro extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int i) {
                         if(i==0){
                             // Si se selecciona el primer elemento, el idioma es Español
+                            Param.locale = "es";
                             establecerIdioma("es");
                             recreate();
                         }else if (i==1){
                             // Si se selecciona el primer elemento, el idioma es Inglés
+                            Param.locale = "en";
                             establecerIdioma("en");
                             recreate();
                         }
@@ -161,5 +176,13 @@ public class Resgistro extends AppCompatActivity {
     }
 
 
-
+    private void fijarIdioma() {
+        // Usamos Locale para forzar la localización desde dentro de la aplicación
+        Locale locale = new Locale(Param.locale);
+        Locale.setDefault(locale);
+        // Actualizamos la configuración de todos los recursos de la aplicación
+        Configuration configuracion = new Configuration();
+        configuracion.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(configuracion, getBaseContext().getResources().getDisplayMetrics());
+    }
 }

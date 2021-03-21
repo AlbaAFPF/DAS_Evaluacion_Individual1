@@ -7,12 +7,19 @@ import androidx.appcompat.app.ActionBar;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 public class Login extends AppCompatActivity {
 
@@ -26,6 +33,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fijarIdioma();
         setContentView(R.layout.login);
 
         // Asignamos los id a las variables
@@ -56,6 +64,13 @@ public class Login extends AppCompatActivity {
                     if(comprobarUsu == true){
                         // Notificamos al usuario que ha iniciado sesión correctamente
 
+                        // Configuración del canal para notidicaciones
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            NotificationChannel elCanal = new NotificationChannel("IdCanal", "NombreCanal", NotificationManager.IMPORTANCE_DEFAULT);
+                            NotificationManager elManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                            elManager.createNotificationChannel(elCanal);
+                        }
+
                         // Crear el builder
                         NotificationCompat.Builder elBuilder = new NotificationCompat.Builder(getApplicationContext(), "IdCanal");
                         elBuilder.setContentTitle("Inicio de sesión completa.");
@@ -74,11 +89,21 @@ public class Login extends AppCompatActivity {
                     // Si es correcto
                     }else{
                         // Se informa al usuario
-                        Toast.makeText(Login.this, "¡Datos incorrectos!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Login.this, "Datos incorrectos.", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         });
 
+    }
+
+    private void fijarIdioma() {
+        // Usamos Locale para forzar la localización desde dentro de la aplicación
+        Locale locale = new Locale(Param.locale);
+        Locale.setDefault(locale);
+        // Actualizamos la configuración de todos los recursos de la aplicación
+        Configuration configuracion = new Configuration();
+        configuracion.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(configuracion, getBaseContext().getResources().getDisplayMetrics());
     }
 }

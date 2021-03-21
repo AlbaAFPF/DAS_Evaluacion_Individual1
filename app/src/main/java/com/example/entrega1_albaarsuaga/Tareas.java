@@ -1,6 +1,7 @@
 package com.example.entrega1_albaarsuaga;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class Tareas extends AppCompatActivity {
 
@@ -29,6 +31,7 @@ public class Tareas extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fijarIdioma();
         setContentView(R.layout.tareas);
 
         // Asignamos los id a las variables
@@ -107,5 +110,15 @@ public class Tareas extends AppCompatActivity {
             // Notificamos los cambios al adaptador
             adaptador.notifyDataSetChanged();
         }
+    }
+
+    private void fijarIdioma() {
+        // Usamos Locale para forzar la localización desde dentro de la aplicación
+        Locale locale = new Locale(Param.locale);
+        Locale.setDefault(locale);
+        // Actualizamos la configuración de todos los recursos de la aplicación
+        Configuration configuracion = new Configuration();
+        configuracion.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(configuracion, getBaseContext().getResources().getDisplayMetrics());
     }
 }

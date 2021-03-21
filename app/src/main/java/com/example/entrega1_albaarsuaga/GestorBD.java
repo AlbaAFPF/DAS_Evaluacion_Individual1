@@ -16,7 +16,7 @@ public class GestorBD extends SQLiteOpenHelper {
     // Asignamos un nombre a la BD
     private static final String NOMBRE_BD="basedatos.bd";
     // Versión de la BD, que se modifica al hacer cambios
-    private static final int  VERSION_BD=6;
+    private static final int  VERSION_BD=8;
     // Tabla para la lista de tareas
     private static final String TABLA_ASIG="CREATE TABLE Tareas(Codigo VARCHAR(255), Asignatura VARCHAR(255), Tarea VARCHAR(255))";
     // Tabla para el Login y Registro
@@ -35,6 +35,9 @@ public class GestorBD extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(TABLA_ASIG);
         // Tabla para el Login y Registro
         sqLiteDatabase.execSQL(TABLA_LOGIN);
+
+        // Usuario permanente
+        sqLiteDatabase.execSQL("INSERT INTO Usuarios (NombreUsuario, Contrasena) VALUES ('user','pass')");
     }
 
     // Para actualizar al cambiar la versión
