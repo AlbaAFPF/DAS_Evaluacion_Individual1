@@ -20,7 +20,7 @@
         <item name="android:textSize">16dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#186C1C</item>
-
+        <item name="android:fontFamily">@font/merriweatherlight</item>
         <item name="android:navigationBarColor">#617E87</item>
 
         <item name="android:editTextColor">#834B1A</item>
